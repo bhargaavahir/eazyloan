@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loan Application</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+    .form-step {
+      display: none;
+      position: relative;
+      padding: 30px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      min-height: 300px;
+    }
+    .form-step.active {
+      display: block;
+    }
+    .form-step::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80') no-repeat center center;
+      background-size: cover;
+      opacity: 0.08;
+      z-index: 0;
+      border-radius: 10px;
+      pointer-events: none;
+      filter: brightness(1.1);
+    }
+    .form-step > * {
+      position: relative;
+      z-index: 1;
+    }
+    .form-container {
+      max-width: 550px;
+      margin: 80px auto;
+    }
+
+    /* Step 11 updated to separate first and last name inputs side by side */
+    #step11 .row {
+      gap: 15px;
+    }
+    #step11 .form-control {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h2 class="text-center mb-4">Loan Application</h2>
+
+      <form id="loanForm">
+        <!-- Step 1 -->
+        <div class="form-step active" id="step1">
+          <label for="loanAmount" class="form-label">How much do you need?</label>
+          <select id="loanAmount" class="form-select">
+            <option value="">Select an amount</option>
+            <option value="500">$500</option>
+            <option value="1000">$1000</option>
+            <option value="2000">$2000</option>
+            <option value="3000">$3000</option>
+            <option value="4000">$4000</option>
+            <option value="5000">$5000</option>
+          </select>
+          <button class="btn btn-primary mt-3" type="button" onclick="nextStep()">Continue</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="form-step" id="step2">
+          <label for="loanPurpose" class="form-label">What is the purpose of the loan?</label>
+          <select id="loanPurpose" class="form-select mb-4">
+            <option value="">Select a purpose</option>
+            <option value="personal">Personal Use</option>
+            <option value="business">Business</option>
+            <option value="medical">Medical</option>
+            <option value="education">Education</option>
+            <option value="other">Other</option>
+          </select>
+
+          <div class="row" id="step2Names" style="margin-bottom:20px;">
+            <div class="col">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" id="firstName" class="form-control" placeholder="First Name" />
+            </div>
+            <div class="col">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" id="lastName" class="form-control" placeholder="Last Name" />
+            </div>
+          </div>
+
+          <button class="btn btn-primary mt-3" type="button" onclick="nextStep()">Continue</button>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="form-step" id="step3">
+          <label class="form-label">What's your date of birth?</label>
+          <input type="date" class="form-control" id="dob" />
+          <button class="btn btn-primary mt-3" type="button" onclick="nextStep()">Continue</button>
+        </div>
+
+        <!-- Other steps... -->
+        <div class="form-step" id="step4">
+          <label class="form-label">Do you rent or own your home?</label>
+          <select class="form-select" id="housing">
+            <option value="">Select</option>
+            <option value="rent">Rent</option>
+            <option value="own">Own</option>
+          </select>
+          <button class="btn btn-primary mt-3" type="button" onclick="nextStep()">Continue</button>
+        </div>
+
+        <div class="form-step" id="step5">
+          <label class="form-label">What's your estimated credit score?</label>
+          <select class="form-select" id="creditScore">
+            <option value="">Select</option>
+            <option value="excellent">Excellent (720+)</option>
+            <option value="good">Good (680-719)</option>
+            <option value="fair">Fair (640-679)</option>
+            <option value="poor">Poor (639 and below)</option>
+          </select>
+          <button class="btn btn-primary mt-3" type="button" onclick="nextStep()">Continue</button>
+        </div>
+
+        <div class="form-step" id="step6">
+          <label class="form-label">What's your employment status?</label>
+          <select class="form-select" id="employment">
+            <option value="">Select</option>
+            <option value="employed">Employed</option>
+            <option value="self-employed">Self-employed</option>
+            <option value="unemployed">Unemployed</option>
+            <option value="student">Student</option>
+          </select>
+          <button class="btn btn-primary mt-3" type="button" onclick="nextStep()">Continue</button>
+        </div>
+
+        <div class="form-step" id="step7">
+          <label class="form-label">Do you get paid via direct deposit?</label>
+          <select class="form-select" id="directDeposit">
+            <option value="">Select</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+          <button class="btn btn-primary mt-3" type="button" onclick="nextStep()">Continue</button>
+        </div>
+
+        <div class="form-step" id="step8">
+          <label class="form-label">What's your annual income before taxes?</label>
+          <input type="number" class="form-control" id="income" />
+          <button class="btn btn-primary mt-3" type="button" onclick="nextStep()">Continue</button>
+        </div>
+
+        <div class="form-step" id="step9">
+          <label class="form-label">What is your zipcode?</label>
+          <input type="text" class="form-control" id="zipcode" />
+          <button class="btn btn-primary mt-3" type="button" onclick="nextStep()">Continue</button>
+        </div>
+
+        <div class="form-step" id="step10">
+          <label class="form-label">What is your street address?</label>
+          <input type="text" class="form-control" id="address" />
+          <button class="btn btn-primary mt-3" type="button" onclick="nextStep()">Continue</button>
+        </div>
+
+        <!-- Step 11 with separated first and last name removed, since we added on Step 2 -->
+        <div class="form-step" id="step11">
+          <label class="form-label">Phone number</label>
+          <input type="tel" class="form-control" id="phone" />
+          <button class="btn btn-success mt-3" type="button" onclick="submitFinalForm()">Submit</button>
+        </div>
+
+        <div class="form-step" id="loadingStep">
+          <p class="text-center">⏳ Loading... One moment while we prepare your document.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 1;
+
+    function nextStep() {
+      // Basic validation for required inputs on current step
+      const step = document.getElementById(`step${currentStep}`);
+      let valid = false;
+
+      // Validation logic for each step
+      if (currentStep === 1) {
+        valid = step.querySelector('select').value !== '';
+      } else if (currentStep === 2) {
+        const loanPurpose = document.getElementById('loanPurpose').value.trim();
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        valid = loanPurpose !== '' && firstName !== '' && lastName !== '';
+      } else if (currentStep === 3) {
+        valid = step.querySelector('input').value !== '';
+      } else {
+        // For other steps, just check first input/select non-empty
+        const input = step.querySelector('input, select');
+        valid = input && input.value.trim() !== '';
+      }
+
+      if (!valid) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      step.classList.remove('active');
+      currentStep++;
+      document.getElementById(`step${currentStep}`).classList.add('active');
+    }
+
+    function submitFinalForm() {
+      // You can add validation here for phone number
+      const phone = document.getElementById('phone').value.trim();
+      if (phone === '') {
+        alert('Please enter your phone number.');
+        return;
+      }
+      document.getElementById(`step${currentStep}`).classList.remove('active');
+      document.getElementById('loadingStep').classList.add('active');
+      setTimeout(() => {
+        window.location.href = 'step3.html'; // Redirect after loading
+      }, 3000);
+    }
+  </script>
+</body>
+
+</html>
